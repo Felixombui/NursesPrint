@@ -1,0 +1,204 @@
+/* public/styles.css */
+
+/* --- Root Variables & Theme Configuration --- */
+:root {
+    --primary-color: #6B4EE6;
+    --primary-hover: #5B3ED6;
+    --secondary-color: #8B5CF6;
+    --accent-color: #A78BFA;
+    --text-dark: #111827;
+    --text-medium: #4B5563;
+    --text-light: #9CA3AF;
+    --bg-body: #F9FAFB;
+    --bg-white: #FFFFFF;
+    --container-max: 80rem;
+    --header-height: 4rem;
+    --transition-normal: 0.3s ease-in-out;
+}
+
+/* --- Global Resets --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-dark);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; color: var(--text-dark); }
+a { text-decoration: none; color: inherit; transition: color var(--transition-normal); }
+button { cursor: pointer; font-family: inherit; }
+
+/* --- Header Scroll Effect Logic (BLACK BACKGROUND) --- */
+#main-header { 
+    transition: all var(--transition-normal); 
+    background-color: transparent !important; /* Start transparent over video */
+}
+
+/* When scrolled past hero, turn SOLID BLACK */
+#main-header.scrolled {
+    background-color: #000000 !important;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Text color changes when header becomes black */
+#main-header.scrolled .nav-link,
+#main-header.scrolled .logo-text,
+#main-header.scrolled #mobile-menu-btn { 
+    color: #FFFFFF !important; 
+}
+
+#main-header.scrolled .nav-link:hover { 
+    background-color: rgba(255, 255, 255, 0.1); 
+    color: #FFFFFF !important; 
+}
+
+/* --- Mobile Menu Animation --- */
+#mobile-menu { transform-origin: top; transition: all var(--transition-normal); }
+#mobile-menu.hidden { display: none; opacity: 0; transform: translateY(-10px); }
+#mobile-menu:not(.hidden) { display: block; opacity: 1; transform: translateY(0); animation: slideDown 0.3s ease-out forwards; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- Hero Animations --- */
+@keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+}
+.animate-blob { animation: blob 7s infinite; }
+.animation-delay-2000 { animation-delay: 2s; }
+
+/* --- Exam Library Interactive Styles --- */
+.exam-tab { transition: all 0.2s ease; }
+.exam-tab.active {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 12px rgba(107, 78, 230, 0.3);
+}
+.subject-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.subject-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(107, 78, 230, 0.15);
+    border-color: rgba(107, 78, 230, 0.4);
+}
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* --- Testimonial Slider Animation --- */
+.testimonial-track {
+    display: flex;
+    gap: 1.5rem;
+    width: max-content;
+    animation: scroll-testimonials 40s linear infinite;
+}
+.testimonial-track:hover {
+    animation-play-state: paused;
+}
+@keyframes scroll-testimonials {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Moves half the track (since we duplicate content) */
+}
+
+/* --- Footer & Utilities --- */
+footer { border-top: 1px solid #E5E7EB; background-color: white; }
+footer a { color: #6b7280; }
+footer a:hover { color: var(--primary-color); }
+.container-custom { max-width: var(--container-max); margin-left: auto; margin-right: auto; padding-left: 1rem; padding-right: 1rem; }
+@media (min-width: 1024px) { .container-custom { padding-left: 2rem; padding-right: 2rem; } }
+:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+/* Add to public/styles.css */
+
+/* --- Library Page Specific Header --- */
+/* Unlike the homepage, the library header is always solid white/sticky immediately */
+.library-header {
+    background-color: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid #E5E7EB;
+    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Library Sidebar & Topics --- */
+.topic-link {
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+.topic-link:hover, .topic-link.active {
+    color: var(--primary-color);
+    background-color: rgba(107, 78, 230, 0.05);
+    border-left-color: var(--primary-color);
+    padding-left: calc(1rem - 3px); /* Adjust for border */
+}
+
+/* --- Sample Question Accordion/List --- */
+.question-item {
+    transition: background-color 0.2s ease;
+}
+.question-item:hover {
+    background-color: #F9FAFB;
+}
+.question-item:hover .chevron-icon {
+    color: var(--primary-color);
+    transform: translateX(4px);
+}
+
+/* --- Action Cards Hover Effects --- */
+.action-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.action-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(107, 78, 230, 0.1), 0 10px 10px -5px rgba(107, 78, 230, 0.04);
+    border-color: rgba(107, 78, 230, 0.4);
+}
+/* Add to public/styles.css */
+
+/* --- Quiz Interface Specifics --- */
+.quiz-sidebar {
+    background-color: rgba(255, 255, 255, 0.98);
+    border-right: 1px solid #E5E7EB;
+}
+
+.question-nav-btn {
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+.question-nav-btn:hover {
+    background-color: #F3F4F6;
+}
+.question-nav-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 12px rgba(107, 78, 230, 0.3);
+}
+.question-nav-btn.answered {
+    background-color: #ECFDF5; /* Emerald-50 */
+    color: #059669; /* Emerald-600 */
+    border-color: #A7F3D0;
+}
+
+/* Custom Radio Button Styling */
+.option-radio:checked + .option-label {
+    border-color: var(--primary-color);
+    background-color: rgba(107, 78, 230, 0.05);
+}
+.option-radio:checked + .option-label .radio-indicator {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+}
+.option-radio:checked + .option-label .radio-indicator::after {
+    transform: scale(1);
+}
+
+/* Question Card Animation */
+.question-card {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
